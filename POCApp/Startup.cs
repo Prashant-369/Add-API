@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,7 @@ namespace POCApp
                     Description = "Add API"
                 });
             });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +65,10 @@ namespace POCApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+            });
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             });
         }
     }

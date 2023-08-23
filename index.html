@@ -1,0 +1,34 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Numbers</title>
+</head>
+<body>
+    <input type="number" id="num1" placeholder="Number 1">
+    <input type="number" id="num2" placeholder="Number 2">
+    <button id="calculate">Calculate Sum</button>
+    <p id="result"></p>
+
+    <script>
+        const calculateButton = document.getElementById('calculate');
+        const resultElement = document.getElementById('result');
+
+        calculateButton.addEventListener('click', async () => {
+            const num1 = parseInt(document.getElementById('num1').value);
+            const num2 = parseInt(document.getElementById('num2').value);
+
+            const response = await fetch('https://localhost:5001/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Num1: num1, Num2: num2 })
+            });
+
+            const data = await response.json();
+            resultElement.textContent = `Sum: ${data}`;
+        });
+    </script>
+</body>
+</html>
