@@ -34,7 +34,16 @@ namespace POCApp
                     Description = "Add API"
                 });
             });
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +64,7 @@ namespace POCApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseCors("AllowAllOrigins");
             app.UseAuthorization();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -66,10 +75,7 @@ namespace POCApp
             {
                 endpoints.MapDefaultControllerRoute();
             });
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-            });
+            
         }
     }
 }
